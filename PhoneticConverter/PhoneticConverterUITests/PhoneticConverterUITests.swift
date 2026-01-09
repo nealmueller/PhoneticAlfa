@@ -8,34 +8,112 @@
 import XCTest
 
 final class PhoneticConverterUITests: XCTestCase {
-
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
-        // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
     @MainActor
-    func testExample() throws {
-        // UI tests must launch the application that they test.
+    func testAppStoreScreenshots() throws {
         let app = XCUIApplication()
         app.launch()
 
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        XCUIDevice.shared.orientation = .portrait
+
+        var inputEditor = app.textViews["inputEditor"]
+        var outputView = app.otherElements["outputView"]
+        var clearButton = app.buttons["clearButton"]
+        var speakButton = app.buttons["speakButton"]
+
+        if !inputEditor.waitForExistence(timeout: 5) {
+            inputEditor = app.textViews.firstMatch
+        }
+        XCTAssertTrue(inputEditor.exists)
+
+        if !outputView.waitForExistence(timeout: 2) {
+            outputView = app.otherElements.containing(.staticText, identifier: "Output").firstMatch
+        }
+        if !outputView.exists {
+            outputView = app.otherElements.firstMatch
+        }
+        XCTAssertTrue(outputView.exists)
+
+        if !clearButton.exists {
+            clearButton = app.buttons["Clear"]
+        }
+
+        func replaceInput(with text: String) {
+            if clearButton.waitForExistence(timeout: 1) {
+                clearButton.tap()
+            } else {
+                inputEditor.tap()
+                inputEditor.press(forDuration: 1.0)
+                if app.menuItems["Select All"].waitForExistence(timeout: 1) {
+                    app.menuItems["Select All"].tap()
+                }
+                if app.keys["delete"].exists {
+                    app.keys["delete"].tap()
+                }
+            }
+            inputEditor.tap()
+            inputEditor.typeText(text)
+            outputView.tap()
+            if app.keyboards.buttons["Return"].exists {
+                app.keyboards.buttons["Return"].tap()
+            }
+        }
+
+        replaceInput(with: "YX623K73J3")
+        addScreenshot(named: "01_Instant_NATO")
+
+        replaceInput(with: "A-B")
+        outputView.tap()
+        _ = app.staticTexts["Copied"].waitForExistence(timeout: 1)
+        addScreenshot(named: "02_Tap_To_Copy")
+
+        replaceInput(with: "AB 12")
+        if !speakButton.exists {
+            speakButton = app.buttons["Speak"]
+        }
+        speakButton.tap()
+        addScreenshot(named: "03_Speak_Stop")
+        let stopButton = app.buttons["Stop"]
+        if stopButton.exists {
+            stopButton.tap()
+        }
+
+        replaceInput(with: "A/B")
+        addScreenshot(named: "04_Symbol_Handling")
     }
 
     @MainActor
     func testLaunchPerformance() throws {
-        // This measures how long it takes to launch your application.
         measure(metrics: [XCTApplicationLaunchMetric()]) {
             XCUIApplication().launch()
         }
+    }
+}
+
+@MainActor
+private func addScreenshot(named name: String) {
+    let screenshot = XCUIScreen.main.screenshot()
+    let attachment = XCTAttachment(screenshot: screenshot)
+    attachment.name = name
+    attachment.lifetime = .keepAlways
+    XCTContext.runActivity(named: "Screenshot: \(name)") { activity in
+        activity.add(attachment)
+    }
+
+    let deviceName = ProcessInfo.processInfo.environment["SIMULATOR_DEVICE_NAME"]?
+        .replacingOccurrences(of: " ", with: "_") ?? "UnknownDevice"
+    let baseDir = ProcessInfo.processInfo.environment["SCREENSHOT_OUTPUT_DIR"] ??
+        "/Users/nealmueller/dev/PhoneticConverter/screenshots/appstore_\(deviceName)"
+    let fileManager = FileManager.default
+    do {
+        try fileManager.createDirectory(atPath: baseDir, withIntermediateDirectories: true)
+        let sanitizedName = name.replacingOccurrences(of: " ", with: "_")
+        let filePath = (baseDir as NSString).appendingPathComponent("\(sanitizedName).png")
+        try screenshot.pngRepresentation.write(to: URL(fileURLWithPath: filePath))
+    } catch {
+        XCTFail("Failed to write screenshot: \(error)")
     }
 }

@@ -20,6 +20,7 @@ struct ContentView: View {
                     inputText = ""
                 }
                 .buttonStyle(.bordered)
+                .accessibilityIdentifier("clearButton")
             }
 
             TextEditor(text: $inputText)
@@ -29,6 +30,8 @@ struct ContentView: View {
                     RoundedRectangle(cornerRadius: 10)
                         .stroke(Color.secondary.opacity(0.4), lineWidth: 1)
                 )
+                .accessibilityIdentifier("inputEditor")
+                .accessibilityElement(children: .contain)
 
             Text("Output")
                 .font(.headline)
@@ -53,6 +56,8 @@ struct ContentView: View {
                 }
             }
             .contentShape(RoundedRectangle(cornerRadius: 12))
+            .accessibilityIdentifier("outputView")
+            .accessibilityElement(children: .contain)
             .onTapGesture {
                 UIPasteboard.general.string = outputText
                 let generator = UIImpactFeedbackGenerator(style: .light)
@@ -78,6 +83,7 @@ struct ContentView: View {
                     .frame(maxWidth: .infinity)
             }
             .buttonStyle(.borderedProminent)
+            .accessibilityIdentifier("speakButton")
 
             Spacer()
         }

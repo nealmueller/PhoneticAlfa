@@ -38,3 +38,6 @@ Optional Screen 5: Clear and start again
 Capture command:
 - scripts/capture_screenshots.sh "iPhone 15 Pro Max" screenshots
 - scripts/capture_screenshots.sh "iPhone 15" screenshots
+
+Automated staging (UI test + exported files):
+- scripts/run_appstore_screenshots.sh /Users/nealmueller/dev/PhoneticConverter/screenshots/appstore
