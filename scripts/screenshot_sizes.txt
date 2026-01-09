@@ -1,0 +1,15 @@
+App Store Screenshot Sizes (iPhone-only)
+
+Required (recommended to cover):
+- 6.7-inch: 1290 x 2796 (iPhone 15 Pro Max) or 1284 x 2778 (14 Pro Max)
+- 6.1-inch: 1179 x 2556 (iPhone 15/14/13) or 1170 x 2532 (13/14)
+
+Suggested filenames:
+- iphone_6_7_01.png
+- iphone_6_7_02.png
+- iphone_6_1_01.png
+- iphone_6_1_02.png
+
+Notes:
+- Use portrait for all shots unless you want to showcase landscape.
+- Keep status bar clean and consistent across shots.

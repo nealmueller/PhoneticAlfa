@@ -1,0 +1,40 @@
+Screenshot Capture Checklist
+
+General setup:
+- Device: iPhone 15 Pro Max and iPhone 15 (portrait)
+- Appearance: Light mode
+- Time: keep default simulator time
+- Keyboard hidden for final capture
+
+Screen 1: Instant NATO conversion
+- Input: YX623K73J3
+- Output: Yankee Xray 6 2 3 Kilo 7 3 Juliet 3
+- Button state: Speak
+- Capture
+
+Screen 2: Tap output to copy
+- Input: A-B
+- Output: Alfa Dash Bravo
+- Tap output to show "Copied"
+- Capture while "Copied" is visible
+
+Screen 3: Speak or stop with one tap
+- Input: AB 12
+- Output: Alfa Bravo 1 2
+- Tap Speak so button shows "Stop"
+- Capture
+
+Screen 4: Smart symbol handling
+- Input: A/B
+- Output: Alfa Bravo
+- Capture
+
+Optional Screen 5: Clear and start again
+- Input: any text
+- Tap Clear
+- Output empty
+- Capture
+
+Capture command:
+- scripts/capture_screenshots.sh "iPhone 15 Pro Max" screenshots
+- scripts/capture_screenshots.sh "iPhone 15" screenshots
