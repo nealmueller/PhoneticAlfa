@@ -30,19 +30,6 @@ struct PhoneticTranslator {
         "Z": "Zulu"
     ]
 
-    private static let digitMap: [Character: String] = [
-        "0": "0",
-        "1": "1",
-        "2": "2",
-        "3": "3",
-        "4": "4",
-        "5": "5",
-        "6": "6",
-        "7": "7",
-        "8": "8",
-        "9": "9"
-    ]
-
     static func translate(_ input: String) -> String {
         var tokens: [String] = []
         for rawChar in input.uppercased() {
@@ -57,8 +44,8 @@ struct PhoneticTranslator {
                 tokens.append(word)
                 continue
             }
-            if let digitWord = digitMap[rawChar] {
-                tokens.append(digitWord)
+            if rawChar.isNumber {
+                tokens.append(String(rawChar))
                 continue
             }
         }

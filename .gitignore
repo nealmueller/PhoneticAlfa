@@ -1,19 +1,10 @@
 # macOS
 .DS_Store
 
-# Xcode
-DerivedData/
+# Xcode user state
 xcuserdata/
 *.xcuserstate
-*.xccheckout
-*.moved-aside
-*.xcscmblueprint
 
-# SwiftPM
+# Build artifacts
+DerivedData/
 .build/
-
-# Fastlane (if you add later)
-fastlane/report.xml
-fastlane/Preview.html
-fastlane/screenshots/
-fastlane/test_output/
