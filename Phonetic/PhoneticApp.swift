@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct PhoneticConverterApp: App {
+struct PhoneticApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()

@@ -1,14 +1,14 @@
 Screenshot Capture Checklist
 
 General setup:
-- Device: iPhone 15 Pro Max and iPhone 15 (portrait)
+- Device: iPhone 17 Pro Max and iPhone 17 (portrait)
 - Appearance: Light mode
 - Time: keep default simulator time
 - Keyboard hidden for final capture
 
 Screen 1: Instant NATO conversion
 - Input: YX623K73J3
-- Output: Yankee Xray 6 2 3 Kilo 7 3 Juliet 3
+- Output: Yankee Xray Six Two Three Kilo Seven Three Juliet Three
 - Button state: Speak
 - Capture
 
@@ -20,7 +20,7 @@ Screen 2: Tap output to copy
 
 Screen 3: Speak or stop with one tap
 - Input: AB 12
-- Output: Alfa Bravo 1 2
+- Output: Alfa Bravo One Two
 - Tap Speak so button shows "Stop"
 - Capture
 
@@ -36,8 +36,9 @@ Optional Screen 5: Clear and start again
 - Capture
 
 Capture command:
-- scripts/capture_screenshots.sh "iPhone 15 Pro Max" screenshots
-- scripts/capture_screenshots.sh "iPhone 15" screenshots
+- scripts/capture_screenshots.sh "iPhone 17 Pro Max" screenshots/raw
+- scripts/capture_screenshots.sh "iPhone 17" screenshots/raw
 
 Automated staging (UI test + exported files):
-- scripts/run_appstore_screenshots.sh /Users/nealmueller/dev/PhoneticConverter/screenshots/appstore
+- scripts/run_appstore_screenshots.sh screenshots/appstore/iphone_6_7 "iPhone 17 Pro Max"
+- scripts/run_appstore_screenshots.sh screenshots/appstore/iphone_6_1 "iPhone 17"

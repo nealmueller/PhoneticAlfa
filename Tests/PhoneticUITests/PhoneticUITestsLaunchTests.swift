@@ -1,13 +1,13 @@
 //
-//  PhoneticConverterUITestsLaunchTests.swift
-//  PhoneticConverterUITests
+//  PhoneticUITestsLaunchTests.swift
+//  PhoneticUITests
 //
 //  Created by Neal Mueller on 1/8/26.
 //
 
 import XCTest
 
-final class PhoneticConverterUITestsLaunchTests: XCTestCase {
+final class PhoneticUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

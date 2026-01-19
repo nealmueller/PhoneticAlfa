@@ -13,3 +13,4 @@ Suggested filenames:
 Notes:
 - Use portrait for all shots unless you want to showcase landscape.
 - Keep status bar clean and consistent across shots.
+- Suggested output folders: screenshots/appstore/iphone_6_7 and screenshots/appstore/iphone_6_1.

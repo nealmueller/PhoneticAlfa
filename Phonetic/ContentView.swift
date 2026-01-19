@@ -10,28 +10,39 @@ struct ContentView: View {
         PhoneticTranslator.translate(inputText)
     }
 
+    private var hasOutput: Bool {
+        !outputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            HStack {
-                Text("Input")
-                    .font(.headline)
-                Spacer()
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Input")
+                .font(.headline)
+
+            HStack(spacing: 8) {
+                TextField("", text: $inputText)
+                    .frame(height: 48)
+                    .padding(.horizontal, 12)
+                    .font(.system(size: 24, design: .monospaced))
+                    .textInputAutocapitalization(.never)
+                    .autocorrectionDisabled(true)
+                    .keyboardType(.asciiCapable)
+                    .submitLabel(.done)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.secondary.opacity(0.4), lineWidth: 1)
+                    )
+                    .onChange(of: inputText) { _, _ in
+                        speechManager.lastErrorMessage = nil
+                    }
+
                 Button("Clear") {
                     inputText = ""
                 }
                 .buttonStyle(.bordered)
-                .accessibilityIdentifier("clearButton")
+                .disabled(inputText.isEmpty)
+                .opacity(inputText.isEmpty ? 0.4 : 1.0)
             }
-
-            TextEditor(text: $inputText)
-                .frame(minHeight: 140)
-                .padding(6)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color.secondary.opacity(0.4), lineWidth: 1)
-                )
-                .accessibilityIdentifier("inputEditor")
-                .accessibilityElement(children: .contain)
 
             Text("Output")
                 .font(.headline)
@@ -41,7 +52,9 @@ struct ContentView: View {
                     .fill(Color.secondary.opacity(0.08))
 
                 Text(outputText.isEmpty ? " " : outputText)
-                    .frame(maxWidth: .infinity, minHeight: 120, alignment: .topLeading)
+                    .font(.system(size: 24))
+                    .fixedSize(horizontal: false, vertical: true)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(12)
 
                 if showCopied {
@@ -56,8 +69,6 @@ struct ContentView: View {
                 }
             }
             .contentShape(RoundedRectangle(cornerRadius: 12))
-            .accessibilityIdentifier("outputView")
-            .accessibilityElement(children: .contain)
             .onTapGesture {
                 UIPasteboard.general.string = outputText
                 let generator = UIImpactFeedbackGenerator(style: .light)
@@ -83,9 +94,14 @@ struct ContentView: View {
                     .frame(maxWidth: .infinity)
             }
             .buttonStyle(.borderedProminent)
-            .accessibilityIdentifier("speakButton")
+            .disabled(!hasOutput && !speechManager.isSpeaking)
+            .opacity((hasOutput || speechManager.isSpeaking) ? 1.0 : 0.6)
 
-            Spacer()
+            if let message = speechManager.lastErrorMessage {
+                Text(message)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
         }
         .padding()
     }

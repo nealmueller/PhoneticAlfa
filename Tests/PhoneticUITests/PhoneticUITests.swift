@@ -1,13 +1,13 @@
 //
-//  PhoneticConverterUITests.swift
-//  PhoneticConverterUITests
+//  PhoneticUITests.swift
+//  PhoneticUITests
 //
 //  Created by Neal Mueller on 1/8/26.
 //
 
 import XCTest
 
-final class PhoneticConverterUITests: XCTestCase {
+final class PhoneticUITests: XCTestCase {
     override func setUpWithError() throws {
         continueAfterFailure = false
     }
@@ -63,30 +63,33 @@ final class PhoneticConverterUITests: XCTestCase {
         }
 
         replaceInput(with: "YX623K73J3")
-        addScreenshot(named: "01_Instant_NATO")
+        addScreenshot(index: 1, label: "Instant_NATO")
 
         replaceInput(with: "A-B")
         outputView.tap()
         _ = app.staticTexts["Copied"].waitForExistence(timeout: 1)
-        addScreenshot(named: "02_Tap_To_Copy")
+        addScreenshot(index: 2, label: "Tap_To_Copy")
 
         replaceInput(with: "AB 12")
         if !speakButton.exists {
             speakButton = app.buttons["Speak"]
         }
         speakButton.tap()
-        addScreenshot(named: "03_Speak_Stop")
+        addScreenshot(index: 3, label: "Speak_Stop")
         let stopButton = app.buttons["Stop"]
         if stopButton.exists {
             stopButton.tap()
         }
 
         replaceInput(with: "A/B")
-        addScreenshot(named: "04_Symbol_Handling")
+        addScreenshot(index: 4, label: "Symbol_Handling")
     }
 
     @MainActor
     func testLaunchPerformance() throws {
+        if ProcessInfo.processInfo.environment["SIMULATOR_UDID"] == nil {
+            throw XCTSkip("Launch performance metrics are not supported on physical devices.")
+        }
         measure(metrics: [XCTApplicationLaunchMetric()]) {
             XCUIApplication().launch()
         }
@@ -94,26 +97,29 @@ final class PhoneticConverterUITests: XCTestCase {
 }
 
 @MainActor
-private func addScreenshot(named name: String) {
+private func addScreenshot(index: Int, label: String) {
     let screenshot = XCUIScreen.main.screenshot()
     let attachment = XCTAttachment(screenshot: screenshot)
-    attachment.name = name
+    attachment.name = "\(index)_\(label)"
     attachment.lifetime = .keepAlways
-    XCTContext.runActivity(named: "Screenshot: \(name)") { activity in
+    XCTContext.runActivity(named: "Screenshot: \(index)_\(label)") { activity in
         activity.add(attachment)
     }
 
     let deviceName = ProcessInfo.processInfo.environment["SIMULATOR_DEVICE_NAME"]?
         .replacingOccurrences(of: " ", with: "_") ?? "UnknownDevice"
-    let baseDir = ProcessInfo.processInfo.environment["SCREENSHOT_OUTPUT_DIR"] ??
-        "/Users/nealmueller/dev/PhoneticConverter/screenshots/appstore_\(deviceName)"
+    let defaultDir = FileManager.default.temporaryDirectory
+        .appendingPathComponent("PhoneticScreenshots")
+        .appendingPathComponent(deviceName)
+    let baseDirPath = ProcessInfo.processInfo.environment["SCREENSHOT_OUTPUT_DIR"] ?? defaultDir.path
+    let filenamePrefix = ProcessInfo.processInfo.environment["SCREENSHOT_FILENAME_PREFIX"] ?? ""
     let fileManager = FileManager.default
-    do {
-        try fileManager.createDirectory(atPath: baseDir, withIntermediateDirectories: true)
-        let sanitizedName = name.replacingOccurrences(of: " ", with: "_")
-        let filePath = (baseDir as NSString).appendingPathComponent("\(sanitizedName).png")
-        try screenshot.pngRepresentation.write(to: URL(fileURLWithPath: filePath))
-    } catch {
-        XCTFail("Failed to write screenshot: \(error)")
+
+    guard (try? fileManager.createDirectory(atPath: baseDirPath, withIntermediateDirectories: true)) != nil else {
+        return
     }
+
+    let fileName = String(format: "%@%02d.png", filenamePrefix, index)
+    let filePath = (baseDirPath as NSString).appendingPathComponent(fileName)
+    try? screenshot.pngRepresentation.write(to: URL(fileURLWithPath: filePath))
 }

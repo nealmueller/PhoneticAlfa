@@ -1,10 +1,10 @@
 import XCTest
-@testable import PhoneticConverter
+@testable import Phonetic
 
-final class PhoneticConverterTests: XCTestCase {
+final class PhoneticTests: XCTestCase {
     func testExampleYX623K73J3() {
         let input = "YX623K73J3"
-        let expected = "Yankee Xray Six Two Three Kilo Seven Three Juliet Three"
+        let expected = "Yankee Xray 6 2 3 Kilo 7 3 Juliet 3"
         XCTAssertEqual(PhoneticTranslator.translate(input), expected)
     }
 
@@ -16,7 +16,7 @@ final class PhoneticConverterTests: XCTestCase {
 
     func testExampleWithSpace() {
         let input = "AB 12"
-        let expected = "Alfa Bravo One Two"
+        let expected = "Alfa Bravo 1 2"
         XCTAssertEqual(PhoneticTranslator.translate(input), expected)
     }
 

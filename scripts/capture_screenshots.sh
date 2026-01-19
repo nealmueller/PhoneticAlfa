@@ -2,7 +2,7 @@
 set -euo pipefail
 
 DEVICE_NAME="${1:-iPhone 15}"
-OUT_DIR="${2:-screenshots}"
+OUT_DIR="${2:-screenshots/raw}"
 
 mkdir -p "$OUT_DIR"
 
@@ -14,7 +14,7 @@ if [[ -z "$UDID" ]]; then
 fi
 
 xcrun simctl boot "$UDID" >/dev/null 2>&1 || true
-xcrun simctl launch "$UDID" com.nealmueller.PhoneticConverter >/dev/null 2>&1 || true
+xcrun simctl launch "$UDID" com.nealmueller.phonetic >/dev/null 2>&1 || true
 
 # Wait a moment for the UI to settle.
 sleep 2
