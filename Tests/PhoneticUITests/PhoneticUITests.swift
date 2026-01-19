@@ -15,22 +15,23 @@ final class PhoneticUITests: XCTestCase {
     @MainActor
     func testAppStoreScreenshots() throws {
         let app = XCUIApplication()
+        app.launchEnvironment["UITEST_DISABLE_SPEECH"] = "1"
         app.launch()
 
         XCUIDevice.shared.orientation = .portrait
 
-        var inputEditor = app.textViews["inputEditor"]
-        var outputView = app.otherElements["outputView"]
+        var inputEditor = app.textFields["typeCodeField"]
+        var outputView = app.otherElements["phoneticReadbackView"]
         var clearButton = app.buttons["clearButton"]
         var speakButton = app.buttons["speakButton"]
 
         if !inputEditor.waitForExistence(timeout: 5) {
-            inputEditor = app.textViews.firstMatch
+            inputEditor = app.textFields.firstMatch
         }
         XCTAssertTrue(inputEditor.exists)
 
         if !outputView.waitForExistence(timeout: 2) {
-            outputView = app.otherElements.containing(.staticText, identifier: "Output").firstMatch
+            outputView = app.otherElements.containing(.staticText, identifier: "Phonetic readback").firstMatch
         }
         if !outputView.exists {
             outputView = app.otherElements.firstMatch

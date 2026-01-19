@@ -16,6 +16,18 @@ final class SpeechManager: NSObject, ObservableObject {
 
     func speak(_ text: String) {
         let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        if ProcessInfo.processInfo.environment["UITEST_DISABLE_SPEECH"] == "1" {
+            DispatchQueue.main.async {
+                self.isSpeaking = true
+                self.lastErrorMessage = nil
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                self.isSpeaking = false
+            }
+            return
+        }
+
         guard !trimmed.isEmpty else {
             DispatchQueue.main.async { self.lastErrorMessage = "Enter text to speak." }
             return
@@ -45,6 +57,10 @@ final class SpeechManager: NSObject, ObservableObject {
     }
 
     func stop() {
+        if ProcessInfo.processInfo.environment["UITEST_DISABLE_SPEECH"] == "1" {
+            DispatchQueue.main.async { self.isSpeaking = false }
+            return
+        }
         synthesizer.stopSpeaking(at: .immediate)
         DispatchQueue.main.async { self.isSpeaking = false }
     }
