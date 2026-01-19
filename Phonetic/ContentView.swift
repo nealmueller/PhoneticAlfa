@@ -27,7 +27,7 @@ struct ContentView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Type code")
+            Text("Enter text")
                 .font(.system(size: labelFontSize, weight: .semibold))
 
             HStack(spacing: 8) {
@@ -39,7 +39,7 @@ struct ContentView: View {
                     .autocorrectionDisabled(true)
                     .keyboardType(.asciiCapable)
                     .submitLabel(.done)
-                    .accessibilityIdentifier("typeCodeField")
+                    .accessibilityIdentifier("enterTextField")
                     .overlay(
                         RoundedRectangle(cornerRadius: 10)
                             .stroke(Color.secondary.opacity(0.4), lineWidth: 1)

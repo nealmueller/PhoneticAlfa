@@ -20,7 +20,7 @@ final class PhoneticUITests: XCTestCase {
 
         XCUIDevice.shared.orientation = .portrait
 
-        var inputEditor = app.textFields["typeCodeField"]
+        var inputEditor = app.textFields["enterTextField"]
         var outputView = app.otherElements["phoneticReadbackView"]
         var clearButton = app.buttons["clearButton"]
         var speakButton = app.buttons["speakButton"]
