@@ -7,91 +7,177 @@
   <style>
     :root {
       color-scheme: light;
-      --bg: #f5f7fb;
-      --card: #ffffff;
-      --text: #111827;
-      --muted: #4b5563;
-      --border: #dbe3ef;
-      --accent: #2563eb;
+      --bg: #eef3f8;
+      --panel: rgba(255, 255, 255, 0.88);
+      --text: #172033;
+      --muted: #5d6778;
+      --border: rgba(23, 32, 51, 0.08);
+      --accent: #1f5fbf;
+      --shadow: 0 18px 42px rgba(18, 29, 52, 0.08);
     }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background: var(--bg);
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(52, 105, 197, 0.12), transparent 34%),
+        linear-gradient(180deg, #f7fafd 0%, var(--bg) 100%);
       color: var(--text);
-      line-height: 1.55;
+      line-height: 1.6;
     }
-    .wrap {
+
+    main {
       max-width: 760px;
-      margin: 32px auto;
-      padding: 0 16px;
+      margin: 0 auto;
+      padding: 56px 20px 72px;
     }
-    .card {
-      background: var(--card);
+
+    .panel {
+      background: var(--panel);
       border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 22px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-      margin-bottom: 14px;
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
     }
-    h1, h2 { margin: 0 0 10px; }
-    h1 { font-size: 30px; }
-    h2 { font-size: 20px; }
-    p, li { color: var(--muted); }
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    ul { margin: 8px 0 0 18px; padding: 0; }
-    code {
-      background: #eef2ff;
-      color: #1e3a8a;
-      border-radius: 6px;
-      padding: 2px 6px;
+
+    .eyebrow {
+      margin: 0 0 12px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(32px, 5vw, 46px);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+
+    .meta {
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .intro {
+      margin: 28px 0 0;
+      font-size: 20px;
+      line-height: 1.5;
+      color: var(--text);
+      max-width: 36rem;
+    }
+
+    .grid {
+      display: grid;
+      gap: 18px;
+      margin-top: 32px;
+    }
+
+    .section {
+      padding-top: 18px;
+      border-top: 1px solid rgba(23, 32, 51, 0.08);
+    }
+
+    .section:first-child {
+      padding-top: 0;
+      border-top: 0;
+    }
+
+    h2 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+    }
+
+    p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .contact {
+      margin-top: 32px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(23, 32, 51, 0.08);
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .technical {
+      margin-top: 26px;
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: rgba(31, 95, 191, 0.05);
+      border: 1px solid rgba(31, 95, 191, 0.08);
       font-size: 13px;
+      color: var(--muted);
     }
-    .small { font-size: 14px; }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, SFMono-Regular, Menlo, monospace;
+      font-size: 12px;
+      color: var(--text);
+      background: rgba(23, 32, 51, 0.06);
+      padding: 2px 6px;
+      border-radius: 6px;
+      word-break: break-all;
+    }
   </style>
 </head>
 <body>
-  <main class="wrap">
-    <section class="card">
+  <main>
+    <section class="panel">
+      <p class="eyebrow">Phonetic Alfa</p>
       <h1>Privacy Policy</h1>
-      <p class="small">Effective date: March 10, 2026</p>
-      <p>
-        Phonetic Alfa is designed to work on-device. Core translation and speech features do not require an account.
+      <p class="meta">Effective March 10, 2026</p>
+
+      <p class="intro">
+        Phonetic Alfa is designed to work on your device. We do not offer accounts, and we do not collect or sell personal information entered into the app.
       </p>
-    </section>
 
-    <section class="card">
-      <h2>Data Handling</h2>
-      <ul>
-        <li>We do not create user accounts.</li>
-        <li>We do not sell personal data.</li>
-        <li>Input text stays on-device unless you intentionally share or copy it.</li>
-      </ul>
-    </section>
+      <div class="grid">
+        <section class="section">
+          <h2>How the app works</h2>
+          <p>
+            Typed text, flashcard activity, and quiz activity stay on-device unless you choose to copy, share, or purchase the ad-free upgrade through Apple.
+          </p>
+        </section>
 
-    <section class="card">
-      <h2>In-App Purchase</h2>
-      <ul>
-        <li>"Remove Ads" is a non-consumable in-app purchase.</li>
-        <li>Purchase and restore status are handled by Apple via your Apple ID.</li>
-      </ul>
-    </section>
+        <section class="section">
+          <h2>Purchases</h2>
+          <p>
+            "Remove Ads" is a one-time, non-consumable in-app purchase. Purchase processing and restore handling are provided by Apple through your Apple ID.
+          </p>
+        </section>
 
-    <section class="card">
-      <h2>AdMob Verification</h2>
-      <ul>
-        <li>Seller declaration: <code>google.com, pub-3833805309007689, DIRECT, f08c47fec0942fa0</code></li>
-        <li>Root app-ads.txt: <a href="https://nealmueller.github.io/app-ads.txt">https://nealmueller.github.io/app-ads.txt</a></li>
-      </ul>
-    </section>
+        <section class="section">
+          <h2>Contact</h2>
+          <p>
+            Questions about privacy can be sent to
+            <a href="mailto:neal@nealmueller.com?subject=Phonetic%20Alfa%20Privacy">neal@nealmueller.com</a>.
+          </p>
+        </section>
+      </div>
 
-    <section class="card">
-      <h2>Contact</h2>
-      <p>
-        If you have questions about this policy, contact
-        <a href="mailto:neal@nealmueller.com?subject=Phonetic%20Alfa%20Privacy">neal@nealmueller.com</a>.
-      </p>
+      <div class="technical">
+        Technical notice for ad verification:
+        <code>google.com, pub-3833805309007689, DIRECT, f08c47fec0942fa0</code>
+      </div>
     </section>
   </main>
 </body>
