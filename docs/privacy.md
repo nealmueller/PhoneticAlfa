@@ -11,9 +11,6 @@ Phonetic Alfa is designed to work on your device. We do not offer accounts, and 
 - "Remove Ads" is a non-consumable in-app purchase.
 - Purchase and restore status are handled by Apple via your Apple ID.
 
-## Technical notice
-- Ad verification seller declaration: `google.com, pub-3833805309007689, DIRECT, f08c47fec0942fa0`
-
 ## Contact
 If you have questions about this policy, contact:
 neal@nealmueller.com
