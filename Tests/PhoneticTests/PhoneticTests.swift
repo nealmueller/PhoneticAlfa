@@ -25,4 +25,10 @@ final class PhoneticTests: XCTestCase {
         let expected = "Alfa Bravo"
         XCTAssertEqual(PhoneticTranslator.translate(input), expected)
     }
+
+    func testLAPDMode() {
+        let input = "AB12Z"
+        let expected = "Adam Boy 1 2 Zebra"
+        XCTAssertEqual(PhoneticTranslator.translate(input, mode: .lapd), expected)
+    }
 }
